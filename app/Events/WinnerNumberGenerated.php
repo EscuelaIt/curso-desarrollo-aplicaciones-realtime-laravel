@@ -2,29 +2,27 @@
 
 namespace App\Events;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserSessionChanged implements ShouldBroadcast
+class WinnerNumberGenerated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
-
-    public $type;
+    public $number;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message, $type)
+    public function __construct($number)
     {
-        $this->message = $message;
-        $this->type = $type;
+        $this->number = $number;
     }
 
     /**
@@ -34,6 +32,6 @@ class UserSessionChanged implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('notifications');
+        return new Channel('game');
     }
 }

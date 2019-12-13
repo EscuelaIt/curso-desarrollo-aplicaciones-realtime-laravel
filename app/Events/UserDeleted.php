@@ -2,29 +2,27 @@
 
 namespace App\Events;
 
+use App\User;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
 
-class UserSessionChanged implements ShouldBroadcast
+class UserDeleted implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets;
 
-    public $message;
-
-    public $type;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message, $type)
+    public function __construct(User $user)
     {
-        $this->message = $message;
-        $this->type = $type;
+        $this->user = $user;
     }
 
     /**
@@ -34,6 +32,6 @@ class UserSessionChanged implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('notifications');
+        return new Channel('users');
     }
 }

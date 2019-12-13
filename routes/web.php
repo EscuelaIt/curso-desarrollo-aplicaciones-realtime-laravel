@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::view('/users', 'users.showAll')->name('user.all');
+
+Route::get('/game', 'GameController@showGame')->name('game.show');
